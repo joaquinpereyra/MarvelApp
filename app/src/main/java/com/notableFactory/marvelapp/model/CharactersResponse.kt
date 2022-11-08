@@ -1,9 +1,9 @@
-package com.notableFactory.marvelapp.data.api.model
+package com.notableFactory.marvelapp.model
 
 data class CharactersResponse(
     val attributionHTML: String,
     val attributionText: String,
-    val code: Int,
+    val code: String,
     val copyright: String,
     val `data`: Data,
     val etag: String,

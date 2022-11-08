@@ -1,5 +1,6 @@
-package com.notableFactory.marvelapp.data.api
+package com.notableFactory.marvelapp.repositories
 
+import com.notableFactory.marvelapp.api.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

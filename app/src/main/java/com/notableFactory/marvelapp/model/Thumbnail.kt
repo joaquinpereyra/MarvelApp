@@ -1,4 +1,4 @@
-package com.notableFactory.marvelapp.data.api.model
+package com.notableFactory.marvelapp.model
 
 data class Thumbnail(
     val extension: String,

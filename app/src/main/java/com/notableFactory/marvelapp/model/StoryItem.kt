@@ -1,6 +1,6 @@
-package com.notableFactory.marvelapp.data.api.model
+package com.notableFactory.marvelapp.model
 
-data class ItemXXX(
+data class StoryItem(
     val name: String,
     val resourceURI: String,
     val type: String

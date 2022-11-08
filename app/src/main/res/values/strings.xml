@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">MarvelApp</string>
-    <string name = "PRIVATE_KEY">fe54b0d0a676cc92c189065de700cc0118502e35"</string>
+    <string name = "PRIVATE_KEY">fe54b0d0a676cc92c189065de700cc0118502e35</string>
     <string name = "PUBLIC_KEY">54d11b1e9d0661485b88618ecd566ebf"</string>
 </resources>
