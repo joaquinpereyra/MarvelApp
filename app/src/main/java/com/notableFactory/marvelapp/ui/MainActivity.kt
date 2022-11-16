@@ -14,57 +14,9 @@ import com.notableFactory.marvelapp.viewmodel.LoginViewModel
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel = LoginViewModel()
-    private val adapter = HeroesListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val firstFragment=FavoritesFragment()
-        val secondFragment=BrowseFragment()
-        val thirdFragment=UserFragment()
-
-        //setCurrentFragment(firstFragment)
-/*
-        bottomNavigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.home->setCurrentFragment(firstFragment)
-                R.id.person->setCurrentFragment(secondFragment)
-                R.id.settings->setCurrentFragment(thirdFragment)
-
-            }
-            true
-        }
-
-    }
-
-    private fun setCurrentFragment(fragment:Fragment)=
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment,fragment)
-            commit()
-        }*/
-       /* val heroesRecyclerView:RecyclerView = findViewById(R.id.heroesRecyclerView)
-        heroesRecyclerView.layoutManager = LinearLayoutManager(this)
-        heroesRecyclerView.adapter = adapter
-*/
-        val starButton = findViewById<ImageButton>(R.id.imageButton2)
-
-        starButton.setOnClickListener {
-            starButton.setImageResource(R.drawable.star_relleno)
-        }
-        setObservers()
-    }
-
-    private fun setObservers() {
-        /*
-        viewModel.heroesList.observe(this) {
-            superHeroList ->
-            adapter.heroes = superHeroList
-            adapter.notifyDataSetChanged()
-        }*/
-    }
-
-    override fun onResume() {
-        super.onResume()
-      //  viewModel.fetchCharacters()
+        setContentView(R.layout.activity_login)
     }
 }
