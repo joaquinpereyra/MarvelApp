@@ -2,7 +2,7 @@ package com.notableFactory.marvelapp.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +16,8 @@ class LoginFragment : Fragment() {
 
     private var suggestedEmail: String? = null
     private lateinit var listener: OnLoginFragmentInteractionListener
+    private lateinit var emailBox:EditText
+    private lateinit var passwordBox:EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +37,20 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btn = view.findViewById<Button>(R.id.singInButton)
-        btn.setOnClickListener {
-            val email = view.findViewById<EditText>(R.id.editTextEmail)
-            Log.v("MarvelApp", email.text.toString())
+        val signInButton = view.findViewById<Button>(R.id.SignInButton)
+        val singUpButton = view.findViewById<Button>(R.id.registerButton)
+        emailBox = view.findViewById<EditText>(R.id.editTextEmail)
+        passwordBox = view.findViewById<EditText>(R.id.editTextPassword)
+
+        signInButton.setOnClickListener {
+            val areFormFieldsFilled = checkFormFields()
+            if (areFormFieldsFilled) {
+                listener.logInUser(emailBox.text.toString(), passwordBox.text.toString())
+            }
+        }
+
+        singUpButton.setOnClickListener {
+            listener.switchToRegisterForm()
         }
 
     }
@@ -55,6 +67,33 @@ class LoginFragment : Fragment() {
     }
 
     interface OnLoginFragmentInteractionListener {
-        fun logInUser()
+        fun logInUser(email: String, password: String)
+
+        fun switchToRegisterForm()
+    }
+
+    private fun checkFormFields() : Boolean {
+        var areFormFieldsValid:Boolean
+        val emailText = emailBox.text
+
+        val emailMatchesValidValidFormat = Patterns.EMAIL_ADDRESS.matcher(emailText).matches()
+        val isEmailEmpty = emailBox.text.isNotEmpty()
+        val isEmailValid = isEmailEmpty && emailMatchesValidValidFormat
+        val isPasswordValid = passwordBox.text.isNotEmpty()
+        areFormFieldsValid = isEmailValid && isPasswordValid && emailMatchesValidValidFormat
+
+        if (!emailMatchesValidValidFormat) {
+            emailBox.error = "Invalid email";
+        }
+
+        if (!isEmailEmpty) {
+            emailBox.error = "Email is required";
+        }
+
+        if (!isPasswordValid) {
+            passwordBox.error = "Password is required";
+        }
+
+        return areFormFieldsValid
     }
 }

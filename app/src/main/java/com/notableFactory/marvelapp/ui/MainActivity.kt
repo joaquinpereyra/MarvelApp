@@ -3,14 +3,13 @@ package com.notableFactory.marvelapp.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageButton
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+
 import com.notableFactory.marvelapp.R
-import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
-import com.notableFactory.marvelapp.viewmodel.HeroesViewModel
+import com.notableFactory.marvelapp.utils.Ui.closeKeyboard
 import com.notableFactory.marvelapp.viewmodel.LoginViewModel
 
 class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteractionListener {
@@ -24,6 +23,7 @@ class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteracti
         setContentView(R.layout.activity_login)
 
         showLoginForm()
+        setObservers()
     }
 
     private fun showLoginForm() {
@@ -32,9 +32,8 @@ class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteracti
     }
 
     private fun showRegisterForm() {
-        // TODO Change to RegisterFragment
-        val loginFragment = LoginFragment()
-        replaceFragment(loginFragment)
+        val registerFragment = RegisterFragment()
+        replaceFragment(registerFragment)
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -43,7 +42,26 @@ class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteracti
         fragmentTransaction.commit()
     }
 
-    override fun logInUser() {
-        TODO("Not yet implemented")
+    override fun logInUser(email: String, password: String) {
+        viewModel.logUserIn(email, password)
+        this.currentFocus?.let { closeKeyboard(it, this) }
+    }
+
+    override fun switchToRegisterForm() {
+       showRegisterForm()
+    }
+
+    private fun setObservers() {
+
+        viewModel.wasLogInSuccessful.observe(this) {
+            loggedIn ->
+            var logInResultMessage: String = "Wrong Credentials"
+            Log.v("Batman", loggedIn.toString())
+            if (loggedIn) {
+                logInResultMessage = "Nice to see you again!"
+            }
+            val toast = Toast.makeText(this, logInResultMessage, Toast.LENGTH_SHORT)
+            toast.show()
+        }
     }
 }
