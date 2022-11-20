@@ -86,7 +86,9 @@ class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteracti
                 var signedUpResultMessage: String = "An error occurred, check your data"
                 if (signedUp) {
                     signedUpResultMessage = "Welcome!"
-                    showLoginForm()
+                    finish()
+                    val myIntent = Intent(this, HomeActivity::class.java)
+                    this.startActivity(myIntent)
                 }
                 val toast = Toast.makeText(this, signedUpResultMessage, Toast.LENGTH_SHORT)
                 toast.show()
