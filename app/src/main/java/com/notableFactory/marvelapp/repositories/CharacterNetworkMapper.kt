@@ -7,12 +7,7 @@ import com.notableFactory.marvelapp.model.Result
 object CharacterNetworkMapper: EntityMapper<Result, SuperHero> {
 
     override fun mapFromEntity(entity: Result): SuperHero {
-        return SuperHero(
-            id = entity.id,
-            name = entity.name,
-            description = entity.description,
-            thumbnailUrl = "${entity.thumbnail.path}${entity.thumbnail.extension}"
-        )
+        return entity.toCharacter()
     }
 
     //Not needed for this sample
@@ -20,7 +15,7 @@ object CharacterNetworkMapper: EntityMapper<Result, SuperHero> {
         TODO("Not yet implemented")
     }
 
-    fun fromGetCharactersResponse(networkResponse: CharactersResponse): List<SuperHero> {
-        return networkResponse.data.results.map { mapFromEntity(it) }
+    fun fromGetCharactersResponse(networkResponse: CharactersResponse): MutableList<SuperHero> {
+        return networkResponse.data.results.map { mapFromEntity(it) }.toMutableList()
     }
 }

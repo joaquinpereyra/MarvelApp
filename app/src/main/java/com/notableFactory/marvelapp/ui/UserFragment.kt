@@ -38,5 +38,9 @@ class UserFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_user, container, false)
     }
 
+    companion object {
+        const val TAG = "UserFragment"
+    }
+
 
 }

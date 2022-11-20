@@ -13,6 +13,15 @@ interface ApiService {
         @Query("apikey") apiKey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String,
+
     ): CharactersResponse
+
+    @GET("characters")
+    suspend fun listCharacterStartWith(
+        @Query("apikey") apiKey: String,
+        @Query("ts") ts: String,
+        @Query("hash") hash: String,
+        @Query("nameStartsWith") name: String,
+    ) : CharactersResponse
 
 }

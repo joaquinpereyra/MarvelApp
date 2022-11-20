@@ -3,7 +3,6 @@ package com.notableFactory.marvelapp.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.notableFactory.marvelapp.R
-import com.notableFactory.marvelapp.viewmodel.HeroesViewModel
 import com.notableFactory.marvelapp.viewmodel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {

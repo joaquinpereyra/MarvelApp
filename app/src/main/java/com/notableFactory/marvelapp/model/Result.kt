@@ -12,4 +12,17 @@ data class Result(
     val stories: Stories,
     val thumbnail: Thumbnail,
     val urls: List<Url>
-)
+) {
+    fun toCharacter():SuperHero {
+        return SuperHero(
+            id = id,
+            name = name,
+            description = description,
+            thumbnailUrl = thumbnail.path,
+            thumbnailExt = thumbnail.extension,
+            comics = comics.items.map {
+                it.name
+            }
+        )
+    }
+}

@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.BrowseFragment">
+    tools:context=".ui.BrowseFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/browseFragment"
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="browse fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchCharacterView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/searchview_background"
+            android:iconifiedByDefault="false"
+            android:queryBackground="@android:color/transparent"
+            android:queryHint="Enter Super Hero name"
+            app:iconifiedByDefault="true">
+
+
+        </androidx.appcompat.widget.SearchView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/characterRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_below="@+id/search_bar"
+            android:layout_marginTop="0dp"
+            android:maxHeight="200dp"
+            android:scrollbars="vertical" />
+
+
+    </GridLayout>
+
+</LinearLayout>
+

@@ -38,4 +38,8 @@ class FavoritesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_favorites, container, false)
     }
 
+    companion object {
+        const val TAG = "FavoritesFragment"
+    }
+
 }

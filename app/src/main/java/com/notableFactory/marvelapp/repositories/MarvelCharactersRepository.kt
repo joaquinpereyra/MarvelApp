@@ -8,7 +8,7 @@ import java.util.*
 
 object MarvelCharactersRepository {
 
-    suspend fun fetchCharacters(): List<SuperHero> {
+    suspend fun fetchCharacters(): MutableList<SuperHero> {
         val timeStamp = Date().time.toString()
         val characters = MarvelClient.service
             .listCharacters(
@@ -19,4 +19,19 @@ object MarvelCharactersRepository {
 
         return CharacterNetworkMapper.fromGetCharactersResponse(characters)
     }
+
+    suspend fun fetchCharactersStartWith(name: String): MutableList<SuperHero> {
+        val timeStamp = Date().time.toString()
+        val characters = MarvelClient.service
+            .listCharacterStartWith(
+                apiKey = "29cf241c04f2f38cdc390afd5d901eea",
+                ts = timeStamp,
+                hash = "$timeStamp${"c9d33219994e7b7dc4aa75e54ef7b5c5b41d2351"}${"29cf241c04f2f38cdc390afd5d901eea"}".md5().toHex(),
+                name = name
+            )
+
+        return CharacterNetworkMapper.fromGetCharactersResponse(characters)
+    }
+
+
 }

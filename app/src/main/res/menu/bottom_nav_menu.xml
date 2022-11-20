@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/favoritesItem"
+        android:id="@+id/favoritesFragmentItem"
         android:title="Favorites"
         android:icon="@drawable/star_contorno"/>
     <item
-        android:id="@+id/browseItem"
+        android:id="@+id/browseFragmentItem"
         android:title="Browse"
         android:icon="@drawable/lupa_contorno"/>
     <item
-        android:id="@+id/userItem"
+        android:id="@+id/userFragmentItem"
         android:title="user Settings"
         android:icon="@drawable/user_contorno"/>
 </menu>
