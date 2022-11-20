@@ -1,22 +1,21 @@
 package com.notableFactory.marvelapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.utils.Ui.closeKeyboard
 import com.notableFactory.marvelapp.viewmodel.LoginViewModel
 
-class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteractionListener {
+
+class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteractionListener, RegisterFragment.OnRegisterFragmentInteractionListener {
 
     private val viewModel: LoginViewModel = LoginViewModel()
     private val fragmentManager = supportFragmentManager
     private val fragmentsContainerId = R.id.loginFragmentContainer
+    private var wasViewModelCalledOnce: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +43,7 @@ class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteracti
 
     override fun logInUser(email: String, password: String) {
         viewModel.logUserIn(email, password)
+        wasViewModelCalledOnce = true
         this.currentFocus?.let { closeKeyboard(it, this) }
     }
 
@@ -51,17 +51,46 @@ class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteracti
        showRegisterForm()
     }
 
+    override fun createUser(email: String, password: String) {
+       viewModel.registerUser(email, password)
+        wasViewModelCalledOnce = true
+        this.currentFocus?.let { closeKeyboard(it, this) }
+    }
+
+    override fun switchToLoginForm() {
+        showLoginForm()
+    }
+
     private fun setObservers() {
 
         viewModel.wasLogInSuccessful.observe(this) {
-            loggedIn ->
-            var logInResultMessage: String = "Wrong Credentials"
-            Log.v("Batman", loggedIn.toString())
-            if (loggedIn) {
-                logInResultMessage = "Nice to see you again!"
+                loggedIn ->
+            if (wasViewModelCalledOnce) {
+                var logInResultMessage: String = "Wrong Credentials"
+                if (loggedIn) {
+                    logInResultMessage = "Nice to see you again!"
+                    finish()
+                    val myIntent = Intent(this, HomeActivity::class.java)
+                    this.startActivity(myIntent)
+                }
+                val toast = Toast.makeText(this, logInResultMessage, Toast.LENGTH_SHORT)
+                toast.show()
             }
-            val toast = Toast.makeText(this, logInResultMessage, Toast.LENGTH_SHORT)
-            toast.show()
+
         }
+
+        viewModel.wasRegisterSuccessful.observe(this ) {
+            signedUp ->
+            if (wasViewModelCalledOnce) {
+                var signedUpResultMessage: String = "An error occurred, check your data"
+                if (signedUp) {
+                    signedUpResultMessage = "Welcome!"
+                    showLoginForm()
+                }
+                val toast = Toast.makeText(this, signedUpResultMessage, Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        }
+
     }
 }
