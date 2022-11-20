@@ -19,11 +19,6 @@ import java.io.Serializable
 class HeroesListAdapter() : RecyclerView.Adapter<HeroesListAdapter.CharacterListViewHolder>(), Serializable {
     var heroes :MutableList<SuperHero> = emptyList<SuperHero>().toMutableList()
 
-    private lateinit var clickListener: onItemClickListener
-    interface onItemClickListener {
-        fun onItemClick(heroe: SuperHero)
-    }
-
         private lateinit var context:Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -50,15 +45,9 @@ class HeroesListAdapter() : RecyclerView.Adapter<HeroesListAdapter.CharacterList
         val cardCharacter : LinearLayout = view.findViewById(R.id.characterLinearLayout)
     }
 
-    fun setData(characterList:List<SuperHero>)
-    {
+    fun setData(characterList:List<SuperHero>) {
         heroes.clear()
         this.heroes.addAll(characterList)
         notifyDataSetChanged()
     }
-
-    fun setOnItemClickListener(listener: onItemClickListener) {
-        clickListener = listener
-    }
-
 }

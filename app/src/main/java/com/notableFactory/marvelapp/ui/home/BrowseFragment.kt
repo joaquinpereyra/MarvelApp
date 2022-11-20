@@ -1,5 +1,6 @@
 package com.notableFactory.marvelapp.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.notableFactory.marvelapp.databinding.FragmentBrowseBinding
 import com.notableFactory.marvelapp.model.SuperHero
 import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
+import com.notableFactory.marvelapp.ui.login.LoginFragment
 import com.notableFactory.marvelapp.viewmodel.HomeViewModel
 import java.io.Serializable
+import java.lang.ClassCastException
 
 
 class BrowseFragment : Fragment() {
@@ -23,6 +26,7 @@ class BrowseFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var adapter: HeroesListAdapter
+    private lateinit var listener: OnBrowseFragmentInteractionListener
 
     private var heroesList: MutableList<SuperHero> = emptyList<SuperHero>().toMutableList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +44,16 @@ class BrowseFragment : Fragment() {
         _binding = FragmentBrowseBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is BrowseFragment.OnBrowseFragmentInteractionListener) {
+            listener = context
+        }
+        else {
+            throw ClassCastException("Must implement BrowseFragment.OnBrowseFragmentInteractionListener")
+        }
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,26 +69,24 @@ class BrowseFragment : Fragment() {
         binding.searchCharacterView.setOnQueryTextListener(object  : android.widget.SearchView.OnQueryTextListener,
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                binding.searchCharacterView.clearFocus()
                 if (!query.isNullOrEmpty()) {
-                    homeViewModel.searchByNameStartWith(query)
+                    listener.characterFilteredByName(query)
                 }else{
-                    homeViewModel.fetchCharacters()
+                    listener.characterWithOutFilter()
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (!newText.isNullOrEmpty()) {
-                    homeViewModel.searchByNameStartWith(newText)
+                    listener.characterFilteredByName(newText)
                 }else{
-                    homeViewModel.fetchCharacters()
+                    listener.characterWithOutFilter()
                 }
                 return false
             }
-
-
         })
+
 
     }
     companion object {
@@ -88,4 +100,10 @@ class BrowseFragment : Fragment() {
         }
 
     }
+    interface OnBrowseFragmentInteractionListener {
+        fun characterFilteredByName(name:String)
+        fun characterWithOutFilter()
+        fun onSuperHeroClick(idPosition:Int)
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.notableFactory.marvelapp.ui.home
 
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
@@ -15,7 +16,7 @@ import com.notableFactory.marvelapp.utils.addFragment
 import com.notableFactory.marvelapp.utils.replaceFragment
 import com.notableFactory.marvelapp.viewmodel.HomeViewModel
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInteractionListener{
 
     //private val adapter = HeroesListAdapter()
 
@@ -56,6 +57,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
+
         setObservers()
 
     }
@@ -68,6 +70,7 @@ class HomeActivity : AppCompatActivity() {
                 superHeroList ->
             populateData(superHeroList)
         }
+
     }
 
     override fun onResume() {
@@ -84,6 +87,18 @@ class HomeActivity : AppCompatActivity() {
     private fun populateData(superHeroList: List<SuperHero>) {
         adapter.setData(superHeroList)
         adapter.notifyDataSetChanged()
+    }
+
+    override fun characterFilteredByName(name: String) {
+        viewModel.searchByNameStartWith(name)
+    }
+
+    override fun characterWithOutFilter() {
+        viewModel.fetchCharacters()
+    }
+
+    override fun onSuperHeroClick(idPosition: Int) {
+        TODO("Not yet implemented")
     }
 
 
