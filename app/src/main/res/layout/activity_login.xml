@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#21201d"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.login.LoginActivity">
 
     <TextView
         android:id="@+id/loginTitle"
@@ -34,7 +34,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/backgrounlogin" />
+        tools:srcCompat="@drawable/backgrounlogin"
+
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginFragmentContainer"

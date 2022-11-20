@@ -1,4 +1,4 @@
-package com.notableFactory.marvelapp.ui
+package com.notableFactory.marvelapp.ui.login
 
 import android.content.Context
 import android.os.Bundle

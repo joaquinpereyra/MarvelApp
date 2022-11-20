@@ -1,4 +1,4 @@
-package com.notableFactory.marvelapp.ui
+package com.notableFactory.marvelapp.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

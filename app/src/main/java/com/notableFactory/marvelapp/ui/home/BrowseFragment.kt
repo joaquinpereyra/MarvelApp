@@ -1,31 +1,18 @@
-package com.notableFactory.marvelapp.ui
+package com.notableFactory.marvelapp.ui.home
 
-import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
-import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.databinding.FragmentBrowseBinding
-import com.notableFactory.marvelapp.model.Item
 import com.notableFactory.marvelapp.model.SuperHero
-import com.notableFactory.marvelapp.repositories.MarvelCharactersRepository
 import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
 import com.notableFactory.marvelapp.viewmodel.HomeViewModel
-import kotlinx.coroutines.Job
 import java.io.Serializable
-import java.util.*
 
 
 class BrowseFragment : Fragment() {
@@ -34,10 +21,7 @@ class BrowseFragment : Fragment() {
     private val binding: FragmentBrowseBinding
         get() = _binding!!
 
-
-    private lateinit var factory: HomeViewModelFactory
     private lateinit var homeViewModel: HomeViewModel
-
     private lateinit var adapter: HeroesListAdapter
 
     private var heroesList: MutableList<SuperHero> = emptyList<SuperHero>().toMutableList()
