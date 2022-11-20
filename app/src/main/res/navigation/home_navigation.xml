@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/browseFragmentItemHomeNav"
-        android:name="com.notableFactory.marvelapp.ui.BrowseFragment"
+        android:name="com.notableFactory.marvelapp.ui.home.BrowseFragment"
         android:label="Search"
         tools:layout="@layout/fragment_browse" />
     <fragment
         android:id="@+id/favoritesFragmentItemHomeNav"
-        android:name="com.notableFactory.marvelapp.ui.FavoritesFragment"
+        android:name="com.notableFactory.marvelapp.ui.home.FavoritesFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_favorites" />
     <fragment
         android:id="@+id/userFragmentItemHomeNav"
-        android:name="com.notableFactory.marvelapp.ui.UserFragment"
+        android:name="com.notableFactory.marvelapp.ui.home.UserFragment"
         android:label="User Settings"
         tools:layout="@layout/fragment_user" />
 </navigation>

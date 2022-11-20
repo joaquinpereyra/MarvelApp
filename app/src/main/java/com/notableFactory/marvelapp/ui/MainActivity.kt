@@ -3,12 +3,13 @@ package com.notableFactory.marvelapp.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 import com.notableFactory.marvelapp.R
+import com.notableFactory.marvelapp.ui.login.LoginFragment
+import com.notableFactory.marvelapp.ui.login.RegisterFragment
 import com.notableFactory.marvelapp.utils.Ui.closeKeyboard
 import com.notableFactory.marvelapp.viewmodel.LoginViewModel
 
@@ -21,7 +22,8 @@ class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteracti
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        val image : ImageView = findViewById(R.id.loginTop)
+        image.setImageResource(R.drawable.backgrounlogin)
         showLoginForm()
         setObservers()
     }

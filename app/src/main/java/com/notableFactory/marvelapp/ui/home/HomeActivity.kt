@@ -1,4 +1,4 @@
-package com.notableFactory.marvelapp.ui
+package com.notableFactory.marvelapp.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -39,13 +39,16 @@ class HomeActivity : AppCompatActivity() {
 
             when(it.itemId){
 
-                R.id.favoritesFragmentItem -> supportFragmentManager.replaceFragment(R.id.fragmentContainer,FavoritesFragment(),false,null)
+                R.id.favoritesFragmentItem -> supportFragmentManager.replaceFragment(R.id.fragmentContainer,
+                    FavoritesFragment(),false,null)
                 R.id.browseFragmentItem -> {
-                    supportFragmentManager.replaceFragment(R.id.fragmentContainer,BrowseFragment.newInstance(adapter),false,null)
+                    supportFragmentManager.replaceFragment(R.id.fragmentContainer,
+                        BrowseFragment.newInstance(adapter),false,null)
 
 
                 }
-                R.id.userFragmentItem -> supportFragmentManager.replaceFragment(R.id.fragmentContainer,UserFragment(),false,null)
+                R.id.userFragmentItem -> supportFragmentManager.replaceFragment(R.id.fragmentContainer,
+                    UserFragment(),false,null)
                 else ->{
                 }
             }
