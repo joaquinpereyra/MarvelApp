@@ -1,6 +1,7 @@
 package com.notableFactory.marvelapp.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -34,6 +35,12 @@ class BrowseFragment : Fragment() {
         arguments?.let {
             adapter = it.getSerializable("adapter") as HeroesListAdapter
         }
+
+        adapter.setOnItemClickListener(object : HeroesListAdapter.onItemClickListener {
+            override fun onItemClick(heroe: SuperHero) {
+                listener.onSuperHeroClick(heroe)
+            }
+        })
     }
 
     override fun onCreateView(
@@ -88,6 +95,7 @@ class BrowseFragment : Fragment() {
         })
 
 
+
     }
     companion object {
         const val TAG = "BrowseFragment"
@@ -103,7 +111,8 @@ class BrowseFragment : Fragment() {
     interface OnBrowseFragmentInteractionListener {
         fun characterFilteredByName(name:String)
         fun characterWithOutFilter()
-        fun onSuperHeroClick(idPosition:Int)
+        fun onSuperHeroClick(heroe : SuperHero)
     }
+
 
 }

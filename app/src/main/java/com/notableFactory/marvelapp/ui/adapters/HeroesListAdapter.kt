@@ -19,7 +19,18 @@ import java.io.Serializable
 class HeroesListAdapter() : RecyclerView.Adapter<HeroesListAdapter.CharacterListViewHolder>(), Serializable {
     var heroes :MutableList<SuperHero> = emptyList<SuperHero>().toMutableList()
 
-        private lateinit var context:Context
+    private lateinit var clickListener: onItemClickListener
+
+    interface onItemClickListener {
+        fun onItemClick(heroe: SuperHero)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        clickListener = listener
+    }
+
+    private lateinit var context:Context
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         context = parent.context
@@ -27,11 +38,12 @@ class HeroesListAdapter() : RecyclerView.Adapter<HeroesListAdapter.CharacterList
     }
 
     override fun onBindViewHolder(holder: CharacterListViewHolder, position: Int) {
-        val list = heroes[position]
-        holder.characterName.text = list.name
-        val imageUrl = "${list.thumbnailUrl}/portrait_xlarge.${list.thumbnailExt}"
+        val heroe = heroes[position]
+        holder.characterName.text = heroe.name
+        val imageUrl = "${heroe.thumbnailUrl}/portrait_xlarge.${heroe.thumbnailExt}"
         Picasso.get().load(imageUrl).resize(100,100).into(holder.thumbnail)
-        holder.cardCharacter.setOnClickListener{
+        holder.context.setOnClickListener {
+            clickListener.onItemClick(heroe)
         }
     }
 
@@ -43,11 +55,15 @@ class HeroesListAdapter() : RecyclerView.Adapter<HeroesListAdapter.CharacterList
         val characterName: TextView = view.findViewById(R.id.characterName)
         val thumbnail : ImageView = view.findViewById(R.id.characterImage)
         val cardCharacter : LinearLayout = view.findViewById(R.id.characterLinearLayout)
+        val context: View = view
     }
 
-    fun setData(characterList:List<SuperHero>) {
+    fun setData(characterList:List<SuperHero>)
+    {
         heroes.clear()
         this.heroes.addAll(characterList)
         notifyDataSetChanged()
     }
+
+
 }

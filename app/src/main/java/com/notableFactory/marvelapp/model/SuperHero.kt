@@ -1,5 +1,7 @@
 package com.notableFactory.marvelapp.model
 
+import java.io.Serializable
+
 data class SuperHero(
     val id: String,
     val name: String,
@@ -7,4 +9,4 @@ data class SuperHero(
     val thumbnailUrl: String,
     val thumbnailExt: String,
     val comics: List<String>
-)
+) : Serializable

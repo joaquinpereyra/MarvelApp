@@ -1,31 +1,32 @@
 package com.notableFactory.marvelapp.ui.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.databinding.HomeActivityBinding
 import com.notableFactory.marvelapp.model.SuperHero
+import com.notableFactory.marvelapp.ui.Heroe.SuperHeroeActivity
 import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
 import com.notableFactory.marvelapp.utils.addFragment
 import com.notableFactory.marvelapp.utils.replaceFragment
 import com.notableFactory.marvelapp.viewmodel.HomeViewModel
+import kotlinx.coroutines.SupervisorJob
 
-class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInteractionListener{
+class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInteractionListener {
 
     //private val adapter = HeroesListAdapter()
 
     private lateinit var navController: NavController
-    private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var homeBinding : HomeActivityBinding
-
+    private lateinit var homeBinding: HomeActivityBinding
+    private val fragmentManager = supportFragmentManager
+    private val fragmentContainer = R.id.fragmentContainer
     private val viewModel: HomeViewModel = HomeViewModel()
-    private lateinit var adapter : HeroesListAdapter
+    private lateinit var adapter: HeroesListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,24 +34,30 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
         setContentView(homeBinding.root)
 
         adapter = HeroesListAdapter()
-        supportFragmentManager.addFragment(R.id.fragmentContainer, FavoritesFragment(),true,null)
+        fragmentManager.addFragment(fragmentContainer, FavoritesFragment(), true, null)
 
 
-      homeBinding.bottomNavigationView.setOnItemSelectedListener {
+        homeBinding.bottomNavigationView.setOnItemSelectedListener {
 
-            when(it.itemId){
+            when (it.itemId) {
 
-                R.id.favoritesFragmentItem -> supportFragmentManager.replaceFragment(R.id.fragmentContainer,
-                    FavoritesFragment(),false,null)
+                R.id.favoritesFragmentItem -> fragmentManager.replaceFragment(
+                    fragmentContainer,
+                    FavoritesFragment(), false, null
+                )
                 R.id.browseFragmentItem -> {
-                    supportFragmentManager.replaceFragment(R.id.fragmentContainer,
-                        BrowseFragment.newInstance(adapter),false,null)
+                    fragmentManager.replaceFragment(
+                        fragmentContainer,
+                        BrowseFragment.newInstance(adapter), false, null
+                    )
 
 
                 }
-                R.id.userFragmentItem -> supportFragmentManager.replaceFragment(R.id.fragmentContainer,
-                    UserFragment(),false,null)
-                else ->{
+                R.id.userFragmentItem -> fragmentManager.replaceFragment(
+                    fragmentContainer,
+                    UserFragment(), false, null
+                )
+                else -> {
                 }
             }
             true
@@ -65,9 +72,9 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, null)
     }
+
     private fun setObservers() {
-        viewModel.heroesList.observe(this) {
-                superHeroList ->
+        viewModel.heroesList.observe(this) { superHeroList ->
             populateData(superHeroList)
         }
 
@@ -78,9 +85,9 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
         viewModel.fetchCharacters()
     }
 
-    fun loadAdapter(){
-        val heroesRecyclerView:RecyclerView = findViewById(R.id.characterRecyclerView)
-        heroesRecyclerView.layoutManager = GridLayoutManager(this,2)
+    fun loadAdapter() {
+        val heroesRecyclerView: RecyclerView = findViewById(R.id.characterRecyclerView)
+        heroesRecyclerView.layoutManager = GridLayoutManager(this, 2)
         heroesRecyclerView.adapter = adapter
     }
 
@@ -97,9 +104,11 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
         viewModel.fetchCharacters()
     }
 
-    override fun onSuperHeroClick(idPosition: Int) {
-        TODO("Not yet implemented")
+    override fun onSuperHeroClick(heroe: SuperHero) {
+        val myIntent = Intent(this, SuperHeroeActivity::class.java)
+        this.startActivity(myIntent)
     }
+
 
 
 }
