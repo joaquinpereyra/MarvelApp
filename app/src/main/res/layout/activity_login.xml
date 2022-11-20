@@ -14,10 +14,10 @@
         android:layout_marginStart="-50dp"
         android:layout_marginEnd="-50dp"
         android:maxLines="1"
-        android:text="Marvel App - Marvel App - Marvel App Marvel App -"
+        android:text="Marvel App - Marvel App - Marvel App - Marvel App -"
         android:textAllCaps="true"
         android:textColor="#3A3535"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginTop" />
@@ -25,18 +25,17 @@
     <ImageView
         android:id="@+id/loginTop"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:maxHeight="200sp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/backgrounlogin"
 
-        />
+        tools:srcCompat="@drawable/backgrounlogin" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginFragmentContainer"

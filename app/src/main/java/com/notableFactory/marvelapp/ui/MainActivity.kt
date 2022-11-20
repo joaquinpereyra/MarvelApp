@@ -2,13 +2,15 @@ package com.notableFactory.marvelapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.notableFactory.marvelapp.R
+import com.notableFactory.marvelapp.ui.home.HomeActivity
 import com.notableFactory.marvelapp.ui.login.LoginFragment
 import com.notableFactory.marvelapp.ui.login.RegisterFragment
 import com.notableFactory.marvelapp.utils.Ui.closeKeyboard
+import com.notableFactory.marvelapp.utils.replaceFragment
 import com.notableFactory.marvelapp.viewmodel.LoginViewModel
 
 
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteracti
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val image : ImageView = findViewById(R.id.loginTop)
+        val image:ImageView = findViewById(R.id.loginTop)
         image.setImageResource(R.drawable.backgrounlogin)
         showLoginForm()
         setObservers()
@@ -30,19 +32,15 @@ class MainActivity : AppCompatActivity(), LoginFragment.OnLoginFragmentInteracti
 
     private fun showLoginForm() {
        val loginFragment = LoginFragment()
-        replaceFragment(loginFragment)
+        replaceFragment(loginFragment, fragmentManager, fragmentsContainerId)
     }
 
     private fun showRegisterForm() {
         val registerFragment = RegisterFragment()
-        replaceFragment(registerFragment)
+        replaceFragment(registerFragment, fragmentManager, fragmentsContainerId)
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(fragmentsContainerId, fragment)
-        fragmentTransaction.commit()
-    }
+
 
     override fun logInUser(email: String, password: String) {
         viewModel.logUserIn(email, password)

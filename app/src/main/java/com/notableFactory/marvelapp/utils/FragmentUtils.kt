@@ -1,10 +1,7 @@
 package com.notableFactory.marvelapp.utils
 
-
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.google.android.gms.dynamic.SupportFragmentWrapper
-import com.notableFactory.marvelapp.R
 
 fun FragmentManager.addFragment(
     containerId: Int,
@@ -40,4 +37,10 @@ fun FragmentManager.removeFragment(fragment: Fragment) {
         remove(fragment)
         commit()
     }
+}
+
+fun replaceFragment(fragment: Fragment, fragmentManager: FragmentManager, containerId: Int) {
+    val fragmentTransaction = fragmentManager.beginTransaction()
+    fragmentTransaction.replace(containerId, fragment)
+    fragmentTransaction.commit()
 }
