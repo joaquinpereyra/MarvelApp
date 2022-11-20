@@ -26,8 +26,9 @@ class LoginViewModel : ViewModel() {
     }
 
     fun registerUser(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-        // TODO Perform changes on LiveData based on Task Response
-        _wasRegisterSuccessful.value = true
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                task ->
+            _wasRegisterSuccessful.value  = task.isSuccessful
+        }
     }
 }
