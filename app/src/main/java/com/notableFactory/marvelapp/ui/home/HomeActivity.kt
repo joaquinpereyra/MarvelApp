@@ -105,89 +105,9 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
     }
 
     override fun onSuperHeroClick(heroe: SuperHero) {
-        val myIntent = Intent(this, SuperHeroeActivity::class.java)
-        this.startActivity(myIntent)
+        val intent = Intent(this, SuperHeroeActivity::class.java)
+        intent.putExtra("heroe",heroe)
+        finish()
+        this.startActivity(intent)
     }
-
-
-
 }
-/*
-    private fun setCurrentFragment(fragment:Fragment)=
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment,fragment)
-            commit()
-        }*/
-
-/*
-        supportFragmentManager.addFragment(R.id.fragmentContainer,
-            BrowseFragment(),
-false,
-            BrowseFragment.TAG
-            )
-
-
-
-        navController = Navigation.findNavController(this, R.id.fragmentContainer)
-        bottomNavigationView = findViewById(R.id.bottomNavigationView)
-
-        bottomNavigationView.setupWithNavController(navController)
-
-        NavigationUI.setupActionBarWithNavController(this,navController)
-        val heroesRecyclerView:RecyclerView = findViewById(R.id.characterRecyclerView)
-        heroesRecyclerView.layoutManager = GridLayoutManager(this,2)
-        heroesRecyclerView.adapter = adapter
-
-        bottomNavigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.favoritesFragmentItem->{
-                    supportFragmentManager.popBackStack()
-                    supportFragmentManager.replaceFragment(
-                        R.id.fragmentContainer,
-                        FavoritesFragment(),
-                        false,
-                        FavoritesFragment.TAG
-                    )
-                    true
-                }
-                R.id.browseFragmentItem->{
-                    supportFragmentManager.popBackStack()
-                    supportFragmentManager.replaceFragment(
-                        R.id.fragmentContainer,
-                        BrowseFragment(),
-                        false,
-                        BrowseFragment.TAG
-                    )
-                    true
-                }
-                R.id.userFragmentItem-> {
-                    supportFragmentManager.popBackStack()
-                    supportFragmentManager.replaceFragment(
-                        R.id.fragmentContainer,
-                        UserFragment(),
-                        false,
-                        UserFragment.TAG
-                    )
-                    true
-                }
-
-                else -> {false}
-            }
-
-        }
-
-
-
-        adapter.setOnItemClickListener(object : HeroesListAdapter.onItemClickListener {
-            override fun onItemClick(heroe: SuperHero) {
-                supportFragmentManager.addFragment
-                val intent = Intent(this@HomeActivity, CreateOrEditNoteActivity::class.java)
-                intent.putExtra("AccessMode", AccessMode.EDIT.mode)
-                intent.putExtra("UserId", userId)
-                intent.putExtra("LastNoteId", note.noteId)
-                val bundle = Bundle()
-                bundle.putSerializable("value", note)
-                intent.putExtras(bundle)
-                startActivity(intent)
-            }
-        })*/

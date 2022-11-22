@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.model.SuperHero
 import com.squareup.picasso.Picasso
@@ -41,7 +42,7 @@ class HeroesListAdapter() : RecyclerView.Adapter<HeroesListAdapter.CharacterList
         val heroe = heroes[position]
         holder.characterName.text = heroe.name
         val imageUrl = "${heroe.thumbnailUrl}/portrait_xlarge.${heroe.thumbnailExt}"
-        Picasso.get().load(imageUrl).resize(100,100).into(holder.thumbnail)
+        holder.thumbnail.load(imageUrl)
         holder.context.setOnClickListener {
             clickListener.onItemClick(heroe)
         }
