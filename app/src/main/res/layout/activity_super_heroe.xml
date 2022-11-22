@@ -9,19 +9,17 @@
     <LinearLayout
         android:id="@+id/heroeImageLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/heroeRecycledLayout"
-        app:layout_constraintEnd_toStartOf="@+id/heroeNameLayout"
-        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/heroeImageView"
-            android:layout_width="224dp"
-            android:layout_height="404dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
@@ -29,13 +27,12 @@
 
     <LinearLayout
         android:id="@+id/heroeNameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/heroeRecycledLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/heroeImageLayout"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -77,4 +74,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/star_contorno" />
 </androidx.constraintlayout.widget.ConstraintLayout>
