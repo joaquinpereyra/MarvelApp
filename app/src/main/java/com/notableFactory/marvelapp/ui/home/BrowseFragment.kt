@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,8 +35,9 @@ class BrowseFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         adapter.setOnItemClickListener(object : HeroesListAdapter.onItemClickListener {
-            override fun onItemClick(heroe: SuperHero) {
-                listener.onSuperHeroClick(heroe)
+            override fun onItemClick(heroe: SuperHero, imageView: ImageView) {
+
+                listener.onSuperHeroClick(heroe, imageView)
             }
         })
     }
@@ -111,7 +113,7 @@ class BrowseFragment : Fragment() {
 
     }
     interface OnBrowseFragmentInteractionListener {
-        fun onSuperHeroClick(heroe : SuperHero)
+        fun onSuperHeroClick(heroe : SuperHero, imageView : ImageView)
     }
 
 

@@ -2,22 +2,20 @@ package com.notableFactory.marvelapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.databinding.HomeActivityBinding
 import com.notableFactory.marvelapp.model.SuperHero
 import com.notableFactory.marvelapp.ui.Heroe.SuperHeroeActivity
-import com.notableFactory.marvelapp.ui.Heroe.SuperHeroeSplashScreen
-import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
 import com.notableFactory.marvelapp.utils.addFragment
 import com.notableFactory.marvelapp.utils.replaceFragment
 import com.notableFactory.marvelapp.viewmodel.HomeViewModel
-import kotlinx.coroutines.SupervisorJob
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInteractionListener {
 
@@ -79,10 +77,15 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
 
     }
 
-    override fun onSuperHeroClick(heroe: SuperHero) {
-        val intent = Intent(this, SuperHeroeSplashScreen::class.java)
+    override fun onSuperHeroClick(heroe: SuperHero, imageView:ImageView) {
+        val intent = Intent(this, SuperHeroeActivity::class.java)
         intent.putExtra("heroe",heroe)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this@HomeActivity,
+            imageView,
+            "transitionHeroImage"
+        )
         //finish()
-        this.startActivity(intent)
+        this.startActivity(intent,options.toBundle())
     }
 }
