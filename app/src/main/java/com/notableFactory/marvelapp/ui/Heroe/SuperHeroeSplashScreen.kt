@@ -19,7 +19,7 @@ class SuperHeroeSplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_screen_layout)
 
-        heroe = intent.getSerializableExtra("heroe") as SuperHero
+        heroe = intent.getParcelableExtra<SuperHero>("heroe") as SuperHero
         val splashScreenImageView:ImageView = findViewById(R.id.splashHeroeScreenImageView)
         splashScreenImageView.load("${heroe.thumbnailUrl}/portrait_xlarge.${heroe.thumbnailExt}")
 

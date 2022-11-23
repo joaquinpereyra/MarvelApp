@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.model.SuperHero
-import com.squareup.picasso.Picasso
 import java.io.Serializable
 
 
