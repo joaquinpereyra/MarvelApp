@@ -2,39 +2,35 @@ package com.notableFactory.marvelapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.databinding.HomeActivityBinding
 import com.notableFactory.marvelapp.model.SuperHero
 import com.notableFactory.marvelapp.ui.Heroe.SuperHeroeActivity
-import com.notableFactory.marvelapp.ui.Heroe.SuperHeroeSplashScreen
-import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
 import com.notableFactory.marvelapp.utils.addFragment
 import com.notableFactory.marvelapp.utils.replaceFragment
 import com.notableFactory.marvelapp.viewmodel.HomeViewModel
-import kotlinx.coroutines.SupervisorJob
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInteractionListener {
 
-    //private val adapter = HeroesListAdapter()
 
     private lateinit var navController: NavController
     private lateinit var homeBinding: HomeActivityBinding
     private val fragmentManager = supportFragmentManager
     private val fragmentContainer = R.id.fragmentContainer
-    private val viewModel: HomeViewModel = HomeViewModel()
-    private lateinit var adapter: HeroesListAdapter
+    private val homeViewModel by viewModel<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeBinding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(homeBinding.root)
 
-        adapter = HeroesListAdapter()
         fragmentManager.addFragment(fragmentContainer, FavoritesFragment(), true, null)
 
 
@@ -49,7 +45,7 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
                 R.id.browseFragmentItem -> {
                     fragmentManager.replaceFragment(
                         fragmentContainer,
-                        BrowseFragment.newInstance(adapter), false, null
+                        BrowseFragment(), false, null
                     )
 
 
@@ -75,40 +71,21 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
     }
 
     private fun setObservers() {
-        viewModel.heroesList.observe(this) { superHeroList ->
-            populateData(superHeroList)
+        homeViewModel.heroesList.observe(this) { superHeroList ->
+
         }
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchCharacters()
-    }
-
-    fun loadAdapter() {
-        val heroesRecyclerView: RecyclerView = findViewById(R.id.characterRecyclerView)
-        heroesRecyclerView.layoutManager = GridLayoutManager(this, 2)
-        heroesRecyclerView.adapter = adapter
-    }
-
-    private fun populateData(superHeroList: List<SuperHero>) {
-        adapter.setData(superHeroList)
-        adapter.notifyDataSetChanged()
-    }
-
-    override fun characterFilteredByName(name: String) {
-        viewModel.searchByNameStartWith(name)
-    }
-
-    override fun characterWithOutFilter() {
-        viewModel.fetchCharacters()
-    }
-
-    override fun onSuperHeroClick(heroe: SuperHero) {
-        val intent = Intent(this, SuperHeroeSplashScreen::class.java)
+    override fun onSuperHeroClick(heroe: SuperHero, imageView:ImageView) {
+        val intent = Intent(this, SuperHeroeActivity::class.java)
         intent.putExtra("heroe",heroe)
-      //  finish()
-        this.startActivity(intent)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this@HomeActivity,
+            imageView,
+            "transitionHeroImage"
+        )
+        //finish()
+        this.startActivity(intent,options.toBundle())
     }
 }

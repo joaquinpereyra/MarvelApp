@@ -34,7 +34,7 @@ class SuperHeroeActivity : AppCompatActivity() {
 
 
     fun loadData(){
-        heroe = intent.getSerializableExtra("heroe") as SuperHero
+        heroe = intent.getParcelableExtra<SuperHero>("heroe") as SuperHero
 
         heroeImageView = heroeBinding.heroeImageView
         heroeNameTextView = heroeBinding.heroeName

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.model.SuperHero
-import com.squareup.picasso.Picasso
 import java.io.Serializable
 
 
@@ -23,7 +22,7 @@ class HeroesListAdapter() : RecyclerView.Adapter<HeroesListAdapter.CharacterList
     private lateinit var clickListener: onItemClickListener
 
     interface onItemClickListener {
-        fun onItemClick(heroe: SuperHero)
+        fun onItemClick(heroe: SuperHero, imageView: ImageView)
     }
 
     fun setOnItemClickListener(listener: onItemClickListener) {
@@ -43,9 +42,6 @@ class HeroesListAdapter() : RecyclerView.Adapter<HeroesListAdapter.CharacterList
         holder.characterName.text = heroe.name
         val imageUrl = "${heroe.thumbnailUrl}/portrait_xlarge.${heroe.thumbnailExt}"
         holder.thumbnail.load(imageUrl)
-        holder.context.setOnClickListener {
-            clickListener.onItemClick(heroe)
-        }
     }
 
     override fun getItemCount(): Int {
@@ -57,6 +53,11 @@ class HeroesListAdapter() : RecyclerView.Adapter<HeroesListAdapter.CharacterList
         val thumbnail : ImageView = view.findViewById(R.id.characterImage)
         val cardCharacter : LinearLayout = view.findViewById(R.id.characterLinearLayout)
         val context: View = view
+        init {
+            view.setOnClickListener {
+                clickListener.onItemClick(heroes[adapterPosition],thumbnail)
+            }
+        }
     }
 
     fun setData(characterList:List<SuperHero>)
