@@ -1,14 +1,18 @@
 package com.notableFactory.marvelapp.ui.Heroe
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
 import coil.load
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.databinding.ActivitySuperHeroeBinding
+import com.notableFactory.marvelapp.model.MarvelComic
 import com.notableFactory.marvelapp.model.SuperHero
+import com.notableFactory.marvelapp.ui.comic.ComicActivity
 import com.notableFactory.marvelapp.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -51,6 +55,14 @@ class SuperHeroeActivity : AppCompatActivity() {
     private fun setObservers() {
         homeViewModel.comicsList.observe(this) { comicsList ->
             //TODO Load comics data into recycler view
+            openComicDetailsScreen(comicsList[0])
         }
+    }
+
+    private fun openComicDetailsScreen(comic: MarvelComic) {
+        val intent = Intent(this, ComicActivity::class.java)
+        intent.putExtra("comic", comic)
+
+        this.startActivity(intent)
     }
 }
