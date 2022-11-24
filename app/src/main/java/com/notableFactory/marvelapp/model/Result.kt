@@ -21,7 +21,7 @@ data class Result(
             thumbnailUrl = thumbnail.path,
             thumbnailExt = thumbnail.extension,
             comics = comics.items.map {
-                it.name
+                it.resourceURI.substringAfterLast('/')
             }
         )
     }
