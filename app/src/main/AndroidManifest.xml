@@ -16,7 +16,9 @@
         android:theme="@style/Theme.MarvelApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ComicActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false"
