@@ -1,45 +1,84 @@
 package com.notableFactory.marvelapp.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.notableFactory.marvelapp.R
+import com.notableFactory.marvelapp.databinding.FragmentBrowseBinding
+import com.notableFactory.marvelapp.databinding.FragmentFavoritesBinding
+import com.notableFactory.marvelapp.model.SuperHero
+import com.notableFactory.marvelapp.ui.adapters.FavoritesHeroesListAdapter
+import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
+import java.lang.ClassCastException
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [favoritesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FavoritesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentFavoritesBinding? = null
+    private val binding: FragmentFavoritesBinding
+        get() = _binding!!
 
+    private val adapter = FavoritesHeroesListAdapter()
+    private lateinit var listener: FavoritesFragment.OnFavoritesFragmentInteractionListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        adapter.setOnItemClickListener(object : FavoritesHeroesListAdapter.onItemClickListener {
+            override fun onItemClick(favoritehero: SuperHero) {
+
+                listener.onFavoriteHeroClick(favoritehero)
+            }
+        })
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false)
+        _binding = FragmentFavoritesBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        const val TAG = "FavoritesFragment"
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        val favoritesHeroesRecycledView: RecyclerView = binding.favoritesHeroesRecycledView
+        favoritesHeroesRecycledView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        favoritesHeroesRecycledView.adapter = adapter
+
     }
+/*
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is FavoritesFragment.OnFavoritesFragmentInteractionListener) {
+            listener = context
+        }
+        else {
+            throw ClassCastException("Must implement BrowseFragment.OnBrowseFragmentInteractionListener")
+        }
+
+    }/**/
+
+    private fun setObservers() {
+        homeViewModel.heroesList.observe(viewLifecycleOwner) { favoritesHeroesList ->
+            adapter.setData(favoritesHeroesList)
+        }
+
+    }*/
+
+
+    interface OnFavoritesFragmentInteractionListener {
+        fun onFavoriteHeroClick(favoritehero : SuperHero)
+    }
+
+
 
 }

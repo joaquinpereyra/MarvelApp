@@ -51,7 +51,7 @@ class ComicListAdapter() : RecyclerView.Adapter<ComicListAdapter.ComicsListViewH
         val comic = comics[position]
         holder.comicName.text = comic.title
         val imageUrl = "${comic.thumbnailUrlPath}/portrait_xlarge.${comic.thumbnailUrlExt}"
-        Log.v("LOGmarvelapp", imageUrl)
+
         holder.comicImage.load(imageUrl)
     }
 
