@@ -4,7 +4,7 @@ import com.notableFactory.marvelapp.model.*
 
 object ComicsNetworkMapper : EntityMapper<ComicResult, MarvelComic> {
     override fun mapFromEntity(entity: ComicResult): MarvelComic {
-        return entity.toCharacter()
+        return entity.toComic()
     }
 
     override fun mapToEntity(domainModel: MarvelComic): ComicResult {
