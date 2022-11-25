@@ -2,6 +2,7 @@ package com.notableFactory.marvelapp.repositories
 
 import com.google.gson.Gson
 import com.notableFactory.marvelapp.model.SuperHero
+import com.notableFactory.marvelapp.model.User
 
 class GsonHandler {
     companion object
@@ -9,14 +10,14 @@ class GsonHandler {
         private val gson = Gson()
 
 
-        fun createGsonSuperHeroe(heroe:SuperHero): String
+        fun createGsonUser(user: User): String
         {
-            return gson.toJson(heroe)
+            return gson.toJson(user)
         }
 
-        fun getSuperHeroeFromGson(superHeroGson:String):SuperHero?
+        fun getUserFromGson(userGson:String):User?
         {
-            return gson.fromJson(superHeroGson, SuperHero::class.java) as SuperHero
+            return gson.fromJson(userGson, User::class.java) as User
         }
     }
 }

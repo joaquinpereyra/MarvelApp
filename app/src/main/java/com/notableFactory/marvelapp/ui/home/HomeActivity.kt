@@ -10,6 +10,8 @@ import androidx.navigation.ui.NavigationUI
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.databinding.HomeActivityBinding
 import com.notableFactory.marvelapp.model.SuperHero
+import com.notableFactory.marvelapp.model.User
+import com.notableFactory.marvelapp.repositories.DatabaseHandler
 import com.notableFactory.marvelapp.ui.Heroe.SuperHeroeActivity
 import com.notableFactory.marvelapp.utils.addFragment
 import com.notableFactory.marvelapp.utils.replaceFragment
@@ -30,6 +32,9 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
         super.onCreate(savedInstanceState)
         homeBinding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(homeBinding.root)
+        //TODO ver donde meterlo
+        DatabaseHandler.setDatabase(getSharedPreferences("DATABASE", MODE_PRIVATE))
+
 
         fragmentManager.addFragment(fragmentContainer, FavoritesFragment(), true, null)
 
@@ -77,9 +82,12 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
 
     }
 
-    override fun onSuperHeroClick(heroe: SuperHero, imageView:ImageView) {
+    override fun onSuperHeroClick(hero: SuperHero, imageView:ImageView) {
+
+        var user = DatabaseHandler.getUser("j@gmail.com")
         val intent = Intent(this, SuperHeroeActivity::class.java)
-        intent.putExtra("heroe",heroe)
+        intent.putExtra("hero",hero)
+        intent.putExtra("user",user)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this@HomeActivity,
             imageView,

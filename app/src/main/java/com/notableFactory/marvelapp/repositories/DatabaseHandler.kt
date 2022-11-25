@@ -1,6 +1,7 @@
 package com.notableFactory.marvelapp.repositories
 import android.content.SharedPreferences
 import com.notableFactory.marvelapp.model.SuperHero
+import com.notableFactory.marvelapp.model.User
 
 class DatabaseHandler {
 
@@ -16,6 +17,36 @@ class DatabaseHandler {
             sPrefs = database
         }
 
+        /**
+         * Función que guarda un usuario en la base de datos
+         */
+        fun saveUser(userToCreate: User): Boolean? {
+            val userJson = GsonHandler.createGsonUser(userToCreate)
+            return sPrefs?.edit()?.putString(userToCreate.email, userJson)?.commit()
+        }
+
+        /**
+         * Función que chequea si un usuario existe en base
+         */
+        fun userExist(userEmail:String) : Boolean
+        {
+            val userGson = sPrefs?.getString(userEmail,null)
+            if(userGson == null || userGson == "")
+            {
+                return false
+            }
+            return true
+        }
+
+        /**
+         * Función que dado el nombre de un usuario devuelve el objeto user guardado en base
+         */
+        fun getUser(userEmail: String?): User? {
+            val userGson = sPrefs?.getString(userEmail, null)
+            return GsonHandler.getUserFromGson(userGson.toString())
+        }
+
+        /*
         /**
          * Función que chequea si un heroe existe en base
          */
@@ -48,7 +79,7 @@ class DatabaseHandler {
 
         fun deleteSuperHeroe(superheroeID: String?):Boolean?{
             return sPrefs?.edit()?.remove(superheroeID)?.commit()
-        }
+        }*/
 
     }
 }
