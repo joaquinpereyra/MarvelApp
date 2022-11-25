@@ -3,6 +3,8 @@
     <item
         android:id="@+id/favoritesFragmentItem"
         android:title="Favorites"
+        android:iconTint="@color/white"
+
         android:icon="@drawable/star_contorno"/>
     <item
         android:id="@+id/browseFragmentItem"

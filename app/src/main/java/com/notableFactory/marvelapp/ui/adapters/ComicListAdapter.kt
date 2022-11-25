@@ -1,6 +1,7 @@
 package com.notableFactory.marvelapp.ui.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.model.MarvelComic
+import java.io.Console
 
 class ComicListAdapter() : RecyclerView.Adapter<ComicListAdapter.ComicsListViewHolder>() {
     private lateinit var context: Context
@@ -48,8 +50,8 @@ class ComicListAdapter() : RecyclerView.Adapter<ComicListAdapter.ComicsListViewH
     override fun onBindViewHolder(holder: ComicsListViewHolder, position: Int) {
         val comic = comics[position]
         holder.comicName.text = comic.title
-        val imageUrl = "${comic.thumbnailUrlPath}/portrait_xlarge${comic.thumbnailUrlExt}"
-
+        val imageUrl = "${comic.thumbnailUrlPath}/portrait_xlarge.${comic.thumbnailUrlExt}"
+        Log.v("LOGmarvelapp", imageUrl)
         holder.comicImage.load(imageUrl)
     }
 

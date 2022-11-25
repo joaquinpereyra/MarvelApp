@@ -2,6 +2,7 @@ package com.notableFactory.marvelapp.ui.home
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -63,7 +64,7 @@ class BrowseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.searchCharacterView.setBackgroundColor(Color.WHITE)
         val heroesRecyclerView:RecyclerView = binding.characterRecyclerView
         heroesRecyclerView.layoutManager = GridLayoutManager(activity,2)
         heroesRecyclerView.adapter = adapter
