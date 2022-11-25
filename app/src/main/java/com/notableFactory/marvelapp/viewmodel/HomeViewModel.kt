@@ -21,8 +21,6 @@ class HomeViewModel() : ViewModel() {
     private val _heroesList = MutableLiveData<List<SuperHero>>()
     val heroesList: LiveData<List<SuperHero>> = _heroesList
 
-    private val _comicsList = MutableLiveData<List<MarvelComic>>()
-    val comicsList: LiveData<List<MarvelComic>> = _comicsList
 
     init {
         fetchCharacters()
@@ -49,15 +47,6 @@ class HomeViewModel() : ViewModel() {
         }
     }
 
-    fun fetchCharacterComics(characterId: String) {
-        viewModelScope.launch {
 
-            val comicsResponse = MarvelComicsRepository.fetchCharacterComics(characterId)
-
-            if (comicsResponse != null) {
-                _comicsList.value = comicsResponse
-            }
-        }
-    }
 
 }

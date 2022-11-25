@@ -10,7 +10,7 @@ data class ComicResult(
     val description: String?
 )
 {
-    fun toCharacter():MarvelComic {
+    fun toComic():MarvelComic {
         return MarvelComic(
             title = this.title,
             issueNumber = issueNumber.toString(),

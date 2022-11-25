@@ -6,8 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.app.ActivityOptionsCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.airbnb.lottie.LottieAnimationView
 import com.notableFactory.marvelapp.R
@@ -19,6 +23,9 @@ import com.notableFactory.marvelapp.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.notableFactory.marvelapp.model.User
 import com.notableFactory.marvelapp.repositories.DatabaseHandler
+import com.notableFactory.marvelapp.ui.adapters.ComicListAdapter
+import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
+import com.notableFactory.marvelapp.viewmodel.SuperHeroViewModel
 
 class SuperHeroeActivity : AppCompatActivity() {
 
@@ -29,8 +36,9 @@ class SuperHeroeActivity : AppCompatActivity() {
     private lateinit var heroeNameTextView: TextView
     private lateinit var heroeDescription: TextView
     private lateinit var heroeBinding: ActivitySuperHeroeBinding
+    private var comicsAdapter : ComicListAdapter = ComicListAdapter()
 
-    private val homeViewModel by viewModel<HomeViewModel>()
+    private val comicViewModel by viewModel<SuperHeroViewModel>()
     private lateinit var lottieFavHero: LottieAnimationView
     var pressed = false
     private lateinit var userEmail: String
@@ -42,8 +50,22 @@ class SuperHeroeActivity : AppCompatActivity() {
         setContentView(heroeBinding.root)
 
 
-        userEmail = intent.getStringExtra("userEmail").toString()
         loadData()
+
+
+        val heroesRecyclerView: RecyclerView = heroeBinding.heroComicsRecycledView
+        heroesRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+        heroesRecyclerView.adapter = comicsAdapter
+
+
+        comicsAdapter.setOnItemClickListener(object : ComicListAdapter.onItemClickListener {
+            override fun onItemClick(comic: MarvelComic) {
+                openComicDetailsScreen(comic)
+            }
+        })
+
+        userEmail = intent.getStringExtra("userEmail").toString()
+
 
         heroeNameTextView.setText(hero.name)
         heroeDescription.setText(if (!hero.description.isNullOrEmpty()) hero.description else "${hero.name} not have description.")
@@ -83,18 +105,19 @@ class SuperHeroeActivity : AppCompatActivity() {
 
         hero = intent.getParcelableExtra<SuperHero>("hero") as SuperHero
         user = intent.getParcelableExtra<User>("user") as User
-        homeViewModel.fetchCharacterComics(hero.id)
+        comicViewModel.fetchCharacterComics(hero.id)
         heroeImageView = heroeBinding.heroeImageView
         heroeNameTextView = heroeBinding.heroeName
         heroeDescription = heroeBinding.heroeDescription
         lottieFavHero = heroeBinding.favHero
+
         checkHeroIsFavorite()
     }
 
     fun setObservers() {
-        homeViewModel.comicsList.observe(this) { comicsList ->
-            //TODO Load comics data into recycler view
-            openComicDetailsScreen(comicsList[0])
+        comicViewModel.comicsList.observe(this) { comicsList ->
+            comicsAdapter.setData(comicsList)
+            //openComicDetailsScreen(comicsList[0])
 
         }
     }
@@ -116,4 +139,5 @@ class SuperHeroeActivity : AppCompatActivity() {
             lottieFavHero.playAnimation()
         }
     }
+
 }
