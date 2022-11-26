@@ -14,6 +14,7 @@ import com.notableFactory.marvelapp.R
 import com.notableFactory.marvelapp.databinding.FragmentBrowseBinding
 import com.notableFactory.marvelapp.databinding.FragmentFavoritesBinding
 import com.notableFactory.marvelapp.model.SuperHero
+import com.notableFactory.marvelapp.repositories.DatabaseHandler
 import com.notableFactory.marvelapp.ui.adapters.FavoritesHeroesListAdapter
 import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
 import java.lang.ClassCastException
@@ -29,9 +30,8 @@ class FavoritesFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         adapter.setOnItemClickListener(object : FavoritesHeroesListAdapter.onItemClickListener {
-            override fun onItemClick(favoritehero: SuperHero) {
-
-                listener.onFavoriteHeroClick(favoritehero)
+            override fun onItemClick(favoritehero: SuperHero, imageView: ImageView) {
+                listener.onFavoriteHeroClick(favoritehero,imageView)
             }
         })
 
@@ -42,6 +42,11 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(layoutInflater, container, false)
+
+        var favoritesHeroes = DatabaseHandler.getUser("j@gmail.com")?.favoritesHeroes
+        if (favoritesHeroes != null) {
+            adapter.setData(favoritesHeroes)
+        }
         return binding.root
     }
 
@@ -55,7 +60,7 @@ class FavoritesFragment : Fragment() {
         favoritesHeroesRecycledView.adapter = adapter
 
     }
-/*
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is FavoritesFragment.OnFavoritesFragmentInteractionListener) {
@@ -65,18 +70,11 @@ class FavoritesFragment : Fragment() {
             throw ClassCastException("Must implement BrowseFragment.OnBrowseFragmentInteractionListener")
         }
 
-    }/**/
-
-    private fun setObservers() {
-        homeViewModel.heroesList.observe(viewLifecycleOwner) { favoritesHeroesList ->
-            adapter.setData(favoritesHeroesList)
-        }
-
-    }*/
+    }
 
 
     interface OnFavoritesFragmentInteractionListener {
-        fun onFavoriteHeroClick(favoritehero : SuperHero)
+        fun onFavoriteHeroClick(favoritehero : SuperHero, imageView: ImageView)
     }
 
 

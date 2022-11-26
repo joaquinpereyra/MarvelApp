@@ -15,7 +15,7 @@ class GsonHandler {
             return gson.toJson(user)
         }
 
-        fun getUserFromGson(userGson:String):User?
+        fun getUserFromGson(userGson:String):User
         {
             return gson.fromJson(userGson, User::class.java) as User
         }

@@ -19,7 +19,7 @@ class FavoritesHeroesListAdapter() : RecyclerView.Adapter<FavoritesHeroesListAda
     private lateinit var clickListener: onItemClickListener
 
     interface onItemClickListener {
-        fun onItemClick(favoriteHero: SuperHero)
+        fun onItemClick(favoriteHero: SuperHero, imageView: ImageView)
     }
 
     fun setOnItemClickListener(listener: onItemClickListener) {
@@ -34,7 +34,7 @@ class FavoritesHeroesListAdapter() : RecyclerView.Adapter<FavoritesHeroesListAda
         val  context : View = view
         init {
             view.setOnClickListener {
-                clickListener.onItemClick(favoritesHeroesList[adapterPosition])
+                clickListener.onItemClick(favoritesHeroesList[adapterPosition], favoritesHeroImage)
             }
         }
     }

@@ -1,25 +1,24 @@
 package com.notableFactory.marvelapp.ui.home
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.notableFactory.marvelapp.databinding.FragmentBrowseBinding
 import com.notableFactory.marvelapp.model.SuperHero
 import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
-import com.notableFactory.marvelapp.ui.login.LoginFragment
 import com.notableFactory.marvelapp.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
-import java.lang.ClassCastException
 
 
 class BrowseFragment : Fragment() {
@@ -75,9 +74,15 @@ class BrowseFragment : Fragment() {
                 updateCharacters(query)
                 return false
             }
-            //TODO implementar timer
+
             override fun onQueryTextChange(newText: String?): Boolean {
-                updateCharacters(newText)
+                var handler = Handler(Looper.getMainLooper())
+                handler.removeCallbacksAndMessages(null)
+
+                handler.postDelayed(Runnable {
+                    updateCharacters(newText)
+                }, 2000)
+
                 return false
             }
         })

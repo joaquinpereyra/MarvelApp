@@ -3,22 +3,30 @@ package com.notableFactory.marvelapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.notableFactory.marvelapp.model.SuperHero
 import com.notableFactory.marvelapp.model.User
 import com.notableFactory.marvelapp.repositories.DatabaseHandler
 
 class UserViewModel : ViewModel() {
 
-    private val _user = MutableLiveData<User>()
-    val user: LiveData<User> = _user
+    fun createUser(emailUser: String){
+       DatabaseHandler.saveUser(User(emailUser, emptyList<SuperHero>().toMutableList()))
+    }
 
-    fun saveFavoriteHero(hero: Hero) {
+    fun getUser(emailUser: String) : User? {
+        return DatabaseHandler.getUser(emailUser)
+    }
+
+    fun saveFavoriteHero(user: User, hero: SuperHero) {
         user.favoritesHeroes.add(hero)
         DatabaseHandler.saveUser(user)
     }
 
-    fun removeFavoriteHero() {
+    fun removeFavoriteHero(user: User, hero: SuperHero) {
         user.favoritesHeroes.remove(hero)
         DatabaseHandler.saveUser(user)
     }
+
+
 
 }

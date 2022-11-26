@@ -20,7 +20,7 @@ import com.notableFactory.marvelapp.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInteractionListener {
+class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInteractionListener, FavoritesFragment.OnFavoritesFragmentInteractionListener {
 
 
     private lateinit var navController: NavController
@@ -33,9 +33,6 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
         super.onCreate(savedInstanceState)
         homeBinding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(homeBinding.root)
-        //TODO ver donde meterlo
-        DatabaseHandler.setDatabase(getSharedPreferences("DATABASE", MODE_PRIVATE))
-
 
         fragmentManager.addFragment(fragmentContainer, FavoritesFragment(), true, null)
 
@@ -88,6 +85,20 @@ class HomeActivity : AppCompatActivity(), BrowseFragment.OnBrowseFragmentInterac
         var user = DatabaseHandler.getUser("j@gmail.com")
         val intent = Intent(this, SuperHeroeActivity::class.java)
         intent.putExtra("hero",hero)
+        intent.putExtra("user",user)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this@HomeActivity,
+            imageView,
+            "transitionHeroImage"
+        )
+        //finish()
+        this.startActivity(intent,options.toBundle())
+    }
+
+    override fun onFavoriteHeroClick(favoritehero: SuperHero, imageView :ImageView) {
+        var user = DatabaseHandler.getUser("j@gmail.com")
+        val intent = Intent(this, SuperHeroeActivity::class.java)
+        intent.putExtra("hero",favoritehero)
         intent.putExtra("user",user)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this@HomeActivity,

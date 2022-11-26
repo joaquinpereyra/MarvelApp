@@ -24,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.notableFactory.marvelapp.model.User
 import com.notableFactory.marvelapp.repositories.DatabaseHandler
 import com.notableFactory.marvelapp.ui.adapters.ComicListAdapter
+import com.notableFactory.marvelapp.ui.adapters.FavoritesHeroesListAdapter
 import com.notableFactory.marvelapp.ui.adapters.HeroesListAdapter
 import com.notableFactory.marvelapp.viewmodel.SuperHeroViewModel
 
@@ -37,7 +38,7 @@ class SuperHeroeActivity : AppCompatActivity() {
     private lateinit var heroeDescription: TextView
     private lateinit var heroeBinding: ActivitySuperHeroeBinding
     private var comicsAdapter : ComicListAdapter = ComicListAdapter()
-
+    private var favoritesAdapter : FavoritesHeroesListAdapter = FavoritesHeroesListAdapter()
     private val comicViewModel by viewModel<SuperHeroViewModel>()
     private lateinit var lottieFavHero: LottieAnimationView
     var pressed = false
@@ -84,6 +85,7 @@ class SuperHeroeActivity : AppCompatActivity() {
                 pressed = true
                 saveFavoriteHero()
             }
+            favoritesAdapter.setData(user.favoritesHeroes)
         }
 
         setObservers()
@@ -101,8 +103,6 @@ class SuperHeroeActivity : AppCompatActivity() {
 
 
     private fun loadData() {
-
-
         hero = intent.getParcelableExtra<SuperHero>("hero") as SuperHero
         user = intent.getParcelableExtra<User>("user") as User
         comicViewModel.fetchCharacterComics(hero.id)
@@ -118,7 +118,6 @@ class SuperHeroeActivity : AppCompatActivity() {
         comicViewModel.comicsList.observe(this) { comicsList ->
             comicsAdapter.setData(comicsList)
             //openComicDetailsScreen(comicsList[0])
-
         }
     }
 

@@ -39,6 +39,7 @@ class LoginFragment : Fragment() {
 
         val signInButton = view.findViewById<Button>(R.id.SignInButton)
         val singUpButton = view.findViewById<Button>(R.id.registerButton)
+        singUpButton.text = "SIGN UP"
         emailBox = view.findViewById<EditText>(R.id.editTextEmail)
         passwordBox = view.findViewById<EditText>(R.id.editTextPassword)
 
